@@ -1,3 +1,11 @@
-export const showError = (message) => {
-  alert(message);
+const error = {
+  message: '',
+};
+
+export const showError = () => {
+  alert(error.message);
+};
+
+export const setErrorMessage = (message) => {
+  error.message = message;
 };
