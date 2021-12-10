@@ -1,13 +1,13 @@
 import { $ } from './DOMhelper.js';
-import {
-  addItemTemplate,
-  headerTemplate,
-  productManageTemplate,
-} from './template.js';
+import { addItemTemplate, headerTemplate, productManageTemplate } from './template.js';
 
 export default class VendingMachineView {
   constructor() {
     this.$app = $('#app');
+  }
+
+  renderHeader() {
+    this.$app.insertAdjacentHTML('afterbegin', headerTemplate());
   }
 
   selectProductMangeDOM() {
@@ -17,20 +17,17 @@ export default class VendingMachineView {
     this.$productQuantityInput = $('#product-quantity-input');
   }
 
-  renderHeader() {
-    this.$app.insertAdjacentHTML('afterbegin', headerTemplate());
-  }
-
-  renderProductManage() {
+  renderProductManage(products) {
     this.$app.insertAdjacentHTML('beforeend', productManageTemplate());
+
+    products.map(({ name, price, quantity }) => {
+      return this.renderItem(name, price, quantity);
+    });
   }
 
-  renderAddedItem(name, value, num) {
-    const $productManageTable = $('#product-manage-table');
+  renderItem(name, value, num) {
+    const $productManageTable = $('.product-manage-table');
 
-    $productManageTable.insertAdjacentHTML(
-      'beforeend',
-      addItemTemplate(name, value, num)
-    );
+    $productManageTable.insertAdjacentHTML('afterend', addItemTemplate(name, value, num));
   }
 }
