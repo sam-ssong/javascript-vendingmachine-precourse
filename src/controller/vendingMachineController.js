@@ -10,15 +10,16 @@ export default class VendingMachineController {
     this.vendingMachineModel = new VendingMachineModel();
 
     this.init();
-    this.addEvents();
   }
 
   init() {
     this.vendingMachineView.renderHeader();
     this.vendingMachineView.selectheaderDOM();
+    this.addHeaderEvents();
 
     this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
     this.vendingMachineView.selectProductManageDOM();
+    this.addProductMangeEvents();
   }
 
   handleAddMenu(e) {
@@ -38,25 +39,49 @@ export default class VendingMachineController {
   }
 
   changeToVendingMachineManageTab() {
-    this.vendingMachineView.renderVendingMachineManage();
+    this.vendingMachineView.renderVendingMachineManage(this.vendingMachineModel.coins);
+    this.vendingMachineView.selectVendingMachineManageDOM();
+    this.addVendingMachineManageEvents();
+    this.vendingMachineView.renderVendingMachineChargeAmount(
+      this.vendingMachineModel.getTotalMoney()
+    );
+  }
+
+  handleCharge(e) {
+    e.preventDefault();
+
+    const chargeAmount = this.vendingMachineView.$vendingMachineChargeInput.value;
+
+    console.log(chargeAmount);
   }
 
   changeToProductManageTab() {
     this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
+    this.addProductMangeEvents();
   }
 
-  addEvents() {
+  addProductMangeEvents() {
     this.vendingMachineView.$productAddForm.addEventListener(
       'submit',
       this.handleAddMenu.bind(this)
     );
-    this.vendingMachineView.$productAddMenu.addEventListener(
-      'click',
-      this.changeToProductManageTab.bind(this)
+  }
+
+  addVendingMachineManageEvents() {
+    this.vendingMachineView.$vendingMachineChargeForm.addEventListener(
+      'submit',
+      this.handleCharge.bind(this)
     );
+  }
+
+  addHeaderEvents() {
     this.vendingMachineView.$vendingMachineManageMenu.addEventListener(
       'click',
       this.changeToVendingMachineManageTab.bind(this)
+    );
+    this.vendingMachineView.$productAddMenu.addEventListener(
+      'click',
+      this.changeToProductManageTab.bind(this)
     );
   }
 }

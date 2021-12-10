@@ -43,7 +43,21 @@ export default class VendingMachineView {
     $productManageTable.insertAdjacentHTML('afterend', addItemTemplate(name, value, num));
   }
 
-  renderVendingMachineManage() {
-    this.$mainContent.innerHTML = vendingMachineManageTemplate();
+  renderVendingMachineManage(vendingMachinecoinList) {
+    this.$mainContent.innerHTML = vendingMachineManageTemplate(vendingMachinecoinList);
+  }
+
+  selectVendingMachineManageDOM() {
+    this.$vendingMachineChargeInput = $('#vending-machine-charge-input');
+    this.$vendingMachineChargeForm = $('#vending-machine-charge-form');
+    this.$vendingMachineChargeAmount = $('#vending-machine-charge-amount');
+    this.$vendingMachineCoin500Quantity = $('#vending-machine-coin-500-quantity');
+    this.$vendingMachineCoin100Quantity = $('#vending-machine-coin-100-quantity');
+    this.$vendingMachineCoin50Quantity = $('#vending-machine-coin-50-quantity');
+    this.$vendingMachineCoin10Quantity = $('#vending-machine-coin-10-quantity');
+  }
+
+  renderVendingMachineChargeAmount(amount) {
+    this.$vendingMachineChargeAmount.innerHTML = `${amount}원`;
   }
 }

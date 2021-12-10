@@ -40,14 +40,14 @@ export const addItemTemplate = (name, price, num) => {
   `;
 };
 
-export const vendingMachineManageTemplate = () => {
+export const vendingMachineManageTemplate = ({ coin500, coin100, coin50, coin10 }) => {
   return `
     <h2>자판기 동전 충전하기</h2>
-    <form>
+    <form id="vending-machine-charge-form">
       <input id="vending-machine-charge-input" type="number" />
       <button id="vending-machine-charge-button">충전하기</button>
     </form>
-    <div>보유 금액: <span id="vending-machine-charge-amount"vending-machine-charge-amount></span></div>
+    <div>보유 금액: <span id="vending-machine-charge-amount"></span></div>
     </br>
     <h2>자판기가 보유한 동전</h2>
     <table>
@@ -57,19 +57,19 @@ export const vendingMachineManageTemplate = () => {
       </tr>
       <tr>
         <th>500원</th>
-        <th id="vending-machine-coin-500-quantity"></th>
+        <th id="vending-machine-coin-500-quantity">${coin500.amount}</th>
       </tr>
       <tr>
         <th>100원</th>
-        <th id="vending-machine-coin-100-quantity"></th>
+        <th id="vending-machine-coin-100-quantity">${coin100.amount}</th>
       </tr>
       <tr>
         <th>50원</th>
-        <th id="vending-machine-coin-50-quantity"></th>
+        <th id="vending-machine-coin-50-quantity">${coin50.amount}</th>
       </tr>
       <tr>
         <th>10원</th>
-        <th id="vending-machine-coin-10-quantity"></th>
+        <th id="vending-machine-coin-10-quantity">${coin10.amount}</th>
       </tr>
     </table>
   `;
