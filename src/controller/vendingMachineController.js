@@ -15,9 +15,10 @@ export default class VendingMachineController {
 
   init() {
     this.vendingMachineView.renderHeader();
-    this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
+    this.vendingMachineView.selectheaderDOM();
 
-    this.vendingMachineView.selectProductMangeDOM();
+    this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
+    this.vendingMachineView.selectProductManageDOM();
   }
 
   handleAddMenu(e) {
@@ -36,10 +37,26 @@ export default class VendingMachineController {
     return showError(MESSAGE.ERROR.PRODUCT_PRICE);
   }
 
+  changeToVendingMachineManageTab() {
+    this.vendingMachineView.renderVendingMachineManage();
+  }
+
+  // changeToProductManageTab() {
+  //   this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
+  // }
+
   addEvents() {
     this.vendingMachineView.$productAddForm.addEventListener(
       'submit',
       this.handleAddMenu.bind(this)
+    );
+    this.vendingMachineView.$productAddMenu.addEventListener(
+      'click',
+      this.changeToProductManageTab.bind(this)
+    );
+    this.vendingMachineView.$vendingMachineManageMenu.addEventListener(
+      'click',
+      this.changeToVendingMachineManageTab.bind(this)
     );
   }
 }

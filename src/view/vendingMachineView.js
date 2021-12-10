@@ -1,16 +1,28 @@
 import { $ } from './DOMhelper.js';
-import { addItemTemplate, headerTemplate, productManageTemplate } from './template.js';
+import {
+  addItemTemplate,
+  headerTemplate,
+  productManageTemplate,
+  vendingMachineManageTemplate,
+} from './template.js';
 
 export default class VendingMachineView {
   constructor() {
     this.$app = $('#app');
   }
 
+  selectheaderDOM() {
+    this.$productAddMenu = $('#product-add-menu');
+    this.$vendingMachineManageMenu = $('#vending-machine-manage-menu');
+    this.$productPurchaseMenu = $('#product-purchase-menu');
+    this.$mainContent = $('#main-content');
+  }
+
   renderHeader() {
     this.$app.insertAdjacentHTML('afterbegin', headerTemplate());
   }
 
-  selectProductMangeDOM() {
+  selectProductManageDOM() {
     this.$productAddForm = $('#product-add-form');
     this.$productNameInput = $('#product-name-input');
     this.$productPriceInput = $('#product-price-input');
@@ -18,7 +30,7 @@ export default class VendingMachineView {
   }
 
   renderProductManage(products) {
-    this.$app.insertAdjacentHTML('beforeend', productManageTemplate());
+    this.$mainContent.innerHTML = productManageTemplate();
 
     products.map(({ name, price, quantity }) => {
       return this.renderItem(name, price, quantity);
@@ -29,5 +41,9 @@ export default class VendingMachineView {
     const $productManageTable = $('.product-manage-table');
 
     $productManageTable.insertAdjacentHTML('afterend', addItemTemplate(name, value, num));
+  }
+
+  renderVendingMachineManage() {
+    this.$mainContent.innerHTML = vendingMachineManageTemplate();
   }
 }
