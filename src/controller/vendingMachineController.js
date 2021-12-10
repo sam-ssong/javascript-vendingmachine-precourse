@@ -1,5 +1,8 @@
 import VendingMachineView from '../view/vendingMachineView.js';
 import VendingMachineModel from '../model/vendingMachineModel.js';
+import { isValidPrice } from './validator.js';
+import { showError } from '../utils/error.js';
+import MESSAGE from '../constants/message.js';
 
 export default class VendingMachineController {
   constructor() {
@@ -24,8 +27,13 @@ export default class VendingMachineController {
     const productPrice = this.vendingMachineView.$productPriceInput.value;
     const productQuantity = this.vendingMachineView.$productQuantityInput.value;
 
-    this.vendingMachineModel.setProducts(productName, productPrice, productQuantity);
-    this.vendingMachineView.renderItem(productName, productPrice, productQuantity);
+    if (isValidPrice(productPrice)) {
+      this.vendingMachineModel.setProducts(productName, productPrice, productQuantity);
+
+      return this.vendingMachineView.renderItem(productName, productPrice, productQuantity);
+    }
+
+    return showError(MESSAGE.ERROR.PRODUCT_PRICE);
   }
 
   addEvents() {
