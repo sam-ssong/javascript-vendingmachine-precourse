@@ -41,9 +41,9 @@ export default class VendingMachineController {
     this.vendingMachineView.renderVendingMachineManage();
   }
 
-  // changeToProductManageTab() {
-  //   this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
-  // }
+  changeToProductManageTab() {
+    this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
+  }
 
   addEvents() {
     this.vendingMachineView.$productAddForm.addEventListener(
