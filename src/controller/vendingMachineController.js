@@ -19,7 +19,7 @@ export default class VendingMachineController {
 
     this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
     this.vendingMachineView.selectProductManageDOM();
-    this.addProductMangeEvents();
+    this.addProductManageEvents();
   }
 
   handleAddMenu(e) {
@@ -39,12 +39,12 @@ export default class VendingMachineController {
   }
 
   changeToVendingMachineManageTab() {
-    this.vendingMachineView.renderVendingMachineManage(this.vendingMachineModel.coins);
+    console.log(this.vendingMachineModel.getCoinsAmountArray())
+    this.vendingMachineView.renderVendingMachineManage(this.vendingMachineModel.getCoinsAmountArray(), this.vendingMachineModel.getTotalMoney());
+    
     this.vendingMachineView.selectVendingMachineManageDOM();
+
     this.addVendingMachineManageEvents();
-    this.vendingMachineView.renderVendingMachineChargeAmount(
-      this.vendingMachineModel.getTotalMoney()
-    );
   }
 
   handleCharge(e) {
@@ -52,15 +52,15 @@ export default class VendingMachineController {
 
     const chargeAmount = this.vendingMachineView.$vendingMachineChargeInput.value;
 
-    console.log(chargeAmount);
+    // while (chargeAmount )
   }
 
   changeToProductManageTab() {
     this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
-    this.addProductMangeEvents();
+    this.addProductManageEvents();
   }
 
-  addProductMangeEvents() {
+  addProductManageEvents() {
     this.vendingMachineView.$productAddForm.addEventListener(
       'submit',
       this.handleAddMenu.bind(this)

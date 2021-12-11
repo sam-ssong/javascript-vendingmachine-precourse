@@ -43,8 +43,8 @@ export default class VendingMachineView {
     $productManageTable.insertAdjacentHTML('afterend', addItemTemplate(name, value, num));
   }
 
-  renderVendingMachineManage(vendingMachinecoinList) {
-    this.$mainContent.innerHTML = vendingMachineManageTemplate(vendingMachinecoinList);
+  renderVendingMachineManage(vendingMachinecoinList, vendingMachineTotalMoney) {
+    this.$mainContent.innerHTML = vendingMachineManageTemplate(vendingMachinecoinList, vendingMachineTotalMoney);
   }
 
   selectVendingMachineManageDOM() {
