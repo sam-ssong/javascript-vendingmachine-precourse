@@ -120,7 +120,8 @@ export default class VendingMachineController {
   changeToProductPurchaseMenuTab() {
     this.vendingMachineView.renderProductPurchaseMenu(
       this.vendingMachineModel.products,
-      this.vendingMachineModel.getCoinsAmountArray()
+      this.vendingMachineModel.getCoinsAmountArray(),
+      this.vendingMachineModel.userMoney
     );
   }
 }

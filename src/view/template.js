@@ -47,7 +47,7 @@ export const vendingMachineManageTemplate = (coins, totalMoney) => {
       <input id="vending-machine-charge-input" type="number" />
       <button id="vending-machine-charge-button">충전하기</button>
     </form>
-    <div>보유 금액: <span id="vending-machine-charge-amount">${totalMoney}원</span></div>
+    <div>보유 금액:<span id="vending-machine-charge-amount">${totalMoney}원</span></div>
     </br>
     <h2>자판기가 보유한 동전</h2>
     <table>
@@ -75,14 +75,14 @@ export const vendingMachineManageTemplate = (coins, totalMoney) => {
   `;
 };
 
-export const productPurchaseMenuTemplate = (products, coins) => {
+export const productPurchaseMenuTemplate = (products, coins, userMoney) => {
   return `
     <h2>금액 투입</h2>
     <form>
       <input id="charge-input" type="text" placeholder="투입할 금액" />
       <button id="charge-button">투입하기</button>
     </form>
-    <div id="charge-amount">투입한 금액 <span></span><div>
+    <div id="charge-amount">투입한 금액 <span>${userMoney}원</span><div>
     <br/>
     <h2>구매할 수 있는 상품 현황</h2>
     <table>

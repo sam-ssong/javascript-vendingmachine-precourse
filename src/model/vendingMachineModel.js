@@ -6,6 +6,7 @@ export default class VendingMachineModel {
   constructor() {
     this.products = this.loadProducts() || defaultProducts();
     this.coins = this.loadCoins() || defaultCoins();
+    this.userMoney = this.loadUserMoney() || NUMBER.ZERO;
   }
 
   setProducts(name, price, quantity) {
@@ -22,11 +23,6 @@ export default class VendingMachineModel {
     return JSON.parse(localStorage.getItem('products'));
   }
 
-  loadCoins() {
-    const coinsString = JSON.parse(localStorage.getItem('coins'));
-    return coinsString ? coinsString.map(({ unit, amount }) => new Coin(unit, amount)) : false;
-  }
-
   setCoins(coins) {
     this.coins = coins;
 
@@ -38,6 +34,15 @@ export default class VendingMachineModel {
       const { amount, unit } = cur;
       return acc + amount * unit;
     }, 0);
+  }
+
+  loadCoins() {
+    const coinsString = JSON.parse(localStorage.getItem('coins'));
+    return coinsString ? coinsString.map(({ unit, amount }) => new Coin(unit, amount)) : false;
+  }
+
+  loadUserMoney() {
+    return JSON.parse(localStorage.getItem('userMoney'));
   }
 
   getCoinsAmountArray() {

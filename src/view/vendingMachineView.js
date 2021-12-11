@@ -83,7 +83,11 @@ export default class VendingMachineView {
     }
   }
 
-  renderProductPurchaseMenu(products, vendingMachinecoinList) {
-    this.$mainContent.innerHTML = productPurchaseMenuTemplate(products, vendingMachinecoinList);
+  renderProductPurchaseMenu(products, vendingMachinecoinList, userMoney) {
+    this.$mainContent.innerHTML = productPurchaseMenuTemplate(
+      products,
+      vendingMachinecoinList,
+      userMoney
+    );
   }
 }
