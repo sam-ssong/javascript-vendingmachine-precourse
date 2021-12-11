@@ -66,7 +66,6 @@ export default class VendingMachineView {
   }
 
   renderVendingMachineCoinAmounts({ unit, amount }) {
-    console.log(unit, amount);
     switch (unit) {
       case NUMBER.COIN_UNIT.FIVE_HUNDRED:
         this.$vendingMachineCoin500Quantity.innerHTML = amount;

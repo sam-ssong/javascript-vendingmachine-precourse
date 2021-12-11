@@ -59,9 +59,10 @@ export default class VendingMachineController {
       this.vendingMachineModel.coins.forEach((coin) =>
         this.vendingMachineView.renderVendingMachineCoinAmounts(coin)
       );
-      return this.vendingMachineView.renderVendingMachineChargeAmount(
+      this.vendingMachineView.renderVendingMachineChargeAmount(
         this.vendingMachineModel.getTotalMoney()
       );
+      return this.vendingMachineModel.setCoins(this.vendingMachineModel.coins);
     }
     return showError();
   }

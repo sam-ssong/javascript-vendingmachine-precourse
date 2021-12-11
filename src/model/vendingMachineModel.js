@@ -1,10 +1,11 @@
 import NUMBER from '../constants/number.js';
+import Coin from './coin.js';
 import { defaultCoins, defaultProducts, defaultCoinsAmountArrray } from './data.js';
 
 export default class VendingMachineModel {
   constructor() {
-    this.products = JSON.parse(localStorage.getItem('products')) || defaultProducts();
-    this.coins = JSON.parse(localStorage.getItem('coins')) || defaultCoins();
+    this.products = this.loadProducts() || defaultProducts();
+    this.coins = this.loadCoins() || defaultCoins();
   }
 
   setProducts(name, price, quantity) {
@@ -15,6 +16,15 @@ export default class VendingMachineModel {
     });
 
     localStorage.setItem('products', JSON.stringify(this.products));
+  }
+
+  loadProducts() {
+    return JSON.parse(localStorage.getItem('products'));
+  }
+
+  loadCoins() {
+    const coinsString = JSON.parse(localStorage.getItem('coins'));
+    return coinsString ? coinsString.map(({ unit, amount }) => new Coin(unit, amount)) : false;
   }
 
   setCoins(coins) {
