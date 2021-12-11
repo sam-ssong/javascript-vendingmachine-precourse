@@ -5,6 +5,7 @@ import {
   headerTemplate,
   productManageTemplate,
   vendingMachineManageTemplate,
+  productPurchaseMenuTemplate,
 } from './template.js';
 
 export default class VendingMachineView {
@@ -80,5 +81,9 @@ export default class VendingMachineView {
         this.$vendingMachineCoin10Quantity.innerHTML = amount;
         break;
     }
+  }
+
+  renderProductPurchaseMenu(products, vendingMachinecoinList) {
+    this.$mainContent.innerHTML = productPurchaseMenuTemplate(products, vendingMachinecoinList);
   }
 }

@@ -111,5 +111,16 @@ export default class VendingMachineController {
       'click',
       this.changeToProductManageTab.bind(this)
     );
+    this.vendingMachineView.$productPurchaseMenu.addEventListener(
+      'click',
+      this.changeToProductPurchaseMenuTab.bind(this)
+    );
+  }
+
+  changeToProductPurchaseMenuTab() {
+    this.vendingMachineView.renderProductPurchaseMenu(
+      this.vendingMachineModel.products,
+      this.vendingMachineModel.getCoinsAmountArray()
+    );
   }
 }
