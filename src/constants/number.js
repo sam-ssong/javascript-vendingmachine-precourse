@@ -12,6 +12,7 @@ const NUMBER = {
     FIFTY: 50,
     TEN: 10,
   },
+  ZERO: 0,
 };
 
 export default NUMBER;

@@ -1,3 +1,4 @@
+import NUMBER from '../constants/number.js';
 import { $ } from './DOMhelper.js';
 import {
   addItemTemplate,
@@ -44,7 +45,10 @@ export default class VendingMachineView {
   }
 
   renderVendingMachineManage(vendingMachinecoinList, vendingMachineTotalMoney) {
-    this.$mainContent.innerHTML = vendingMachineManageTemplate(vendingMachinecoinList, vendingMachineTotalMoney);
+    this.$mainContent.innerHTML = vendingMachineManageTemplate(
+      vendingMachinecoinList,
+      vendingMachineTotalMoney
+    );
   }
 
   selectVendingMachineManageDOM() {
@@ -59,5 +63,23 @@ export default class VendingMachineView {
 
   renderVendingMachineChargeAmount(amount) {
     this.$vendingMachineChargeAmount.innerHTML = `${amount}원`;
+  }
+
+  renderVendingMachineCoinAmounts({ unit, amount }) {
+    console.log(unit, amount);
+    switch (unit) {
+      case NUMBER.COIN_UNIT.FIVE_HUNDRED:
+        this.$vendingMachineCoin500Quantity.innerHTML = amount;
+        break;
+      case NUMBER.COIN_UNIT.ONE_HUNDRED:
+        this.$vendingMachineCoin100Quantity.innerHTML = amount;
+        break;
+      case NUMBER.COIN_UNIT.FIFTY:
+        this.$vendingMachineCoin50Quantity.innerHTML = amount;
+        break;
+      default:
+        this.$vendingMachineCoin10Quantity.innerHTML = amount;
+        break;
+    }
   }
 }

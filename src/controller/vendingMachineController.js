@@ -3,6 +3,7 @@ import VendingMachineModel from '../model/vendingMachineModel.js';
 import { isValidProductInput } from './validator.js';
 import { showError } from '../utils/error.js';
 import MESSAGE from '../constants/message.js';
+import NUMBER from '../constants/number.js';
 
 export default class VendingMachineController {
   constructor() {
@@ -39,9 +40,11 @@ export default class VendingMachineController {
   }
 
   changeToVendingMachineManageTab() {
-    console.log(this.vendingMachineModel.getCoinsAmountArray())
-    this.vendingMachineView.renderVendingMachineManage(this.vendingMachineModel.getCoinsAmountArray(), this.vendingMachineModel.getTotalMoney());
-    
+    this.vendingMachineView.renderVendingMachineManage(
+      this.vendingMachineModel.getCoinsAmountArray(),
+      this.vendingMachineModel.getTotalMoney()
+    );
+
     this.vendingMachineView.selectVendingMachineManageDOM();
 
     this.addVendingMachineManageEvents();
@@ -50,9 +53,28 @@ export default class VendingMachineController {
   handleCharge(e) {
     e.preventDefault();
 
-    const chargeAmount = this.vendingMachineView.$vendingMachineChargeInput.value;
+    let chargeAmount = this.vendingMachineView.$vendingMachineChargeInput.value;
 
-    // while (chargeAmount )
+    let randomCoinUnit;
+    while (chargeAmount !== NUMBER.ZERO) {
+      randomCoinUnit = MissionUtils.Random.pickNumberInList(Object.values(NUMBER.COIN_UNIT));
+
+      if (chargeAmount >= randomCoinUnit) {
+        let targetCoin = this.vendingMachineModel.findCoin(randomCoinUnit);
+
+        targetCoin.accumulateAmount();
+
+        chargeAmount -= randomCoinUnit;
+      }
+    }
+
+    this.vendingMachineModel.addAccumulateAmounts();
+    this.vendingMachineModel.resetAccumulatedAmounts();
+
+    this.vendingMachineModel.coins.map((coin) =>
+      this.vendingMachineView.renderVendingMachineCoinAmounts(coin)
+    );
+    // console.log(this.vendingMachineModel.coins);
   }
 
   changeToProductManageTab() {
