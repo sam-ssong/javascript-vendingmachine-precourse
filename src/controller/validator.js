@@ -6,7 +6,7 @@ const isOverGivenPrice = (value, givenPrice) => {
   return value >= givenPrice;
 };
 
-const isDividedByGivenNum = (value, givenNum) => {
+export const isDividedByGivenNum = (value, givenNum) => {
   return !(value % givenNum);
 };
 
@@ -49,4 +49,14 @@ export const isValidProductInput = (productName, productPrice, productQuantity) 
     isValidProductPrice(productPrice) &&
     isValidProductQuantity(productQuantity)
   );
+};
+
+export const isValidChargeInput = (value) => {
+  if (isNotEmpty(value) && !isNaN(value) && isDividedByGivenNum(value, NUMBER.COIN_UNIT.TEN)) {
+    return true;
+  }
+
+  setErrorMessage(MESSAGE.ERROR.NOT_ALLOWED_CHARGE_AMOUNT);
+
+  return false;
 };
