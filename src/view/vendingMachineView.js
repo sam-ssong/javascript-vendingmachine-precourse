@@ -90,4 +90,9 @@ export default class VendingMachineView {
       userMoney
     );
   }
+
+  selectProductPurchaseMenuDOM() {
+    this.$chargeButton = $('#charge-button');
+    this.$chargeInput = $('#charge-input');
+  }
 }

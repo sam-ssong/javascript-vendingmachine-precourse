@@ -123,5 +123,27 @@ export default class VendingMachineController {
       this.vendingMachineModel.getCoinsAmountArray(),
       this.vendingMachineModel.userMoney
     );
+
+    this.vendingMachineView.selectProductPurchaseMenuDOM();
+
+    this.addProductPurchaseMenuEvents();
+  }
+
+  addProductPurchaseMenuEvents() {
+    this.vendingMachineView.$chargeButton.addEventListener(
+      'click',
+      this.handleChargeInput.bind(this)
+    );
+  }
+
+  handleChargeInput(e) {
+    e.preventDefault();
+    const chargeInput = this.vendingMachineView.$chargeInput.value;
+
+    if (isValidChargeInput(chargeInput)) {
+      return console.log('yes');
+    }
+
+    return showError();
   }
 }
