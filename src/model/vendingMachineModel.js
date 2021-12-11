@@ -25,8 +25,8 @@ export default class VendingMachineModel {
 
   getTotalMoney() {
     return Object.values(this.coins).reduce((acc, cur) => {
-      const { amount } = cur;
-      return acc + amount;
+      const { amount, unit } = cur;
+      return acc + amount * unit;
     }, 0);
   }
 

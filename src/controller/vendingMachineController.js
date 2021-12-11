@@ -52,17 +52,17 @@ export default class VendingMachineController {
 
   handleCharge(e) {
     e.preventDefault();
-
     const chargeAmount = this.vendingMachineView.$vendingMachineChargeInput.value;
 
     if (isValidChargeInput(chargeAmount)) {
       this.createRandomCoins(chargeAmount);
-
-      return this.vendingMachineModel.coins.forEach((coin) =>
+      this.vendingMachineModel.coins.forEach((coin) =>
         this.vendingMachineView.renderVendingMachineCoinAmounts(coin)
       );
+      return this.vendingMachineView.renderVendingMachineChargeAmount(
+        this.vendingMachineModel.getTotalMoney()
+      );
     }
-
     return showError();
   }
 
