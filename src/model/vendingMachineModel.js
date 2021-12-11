@@ -35,13 +35,24 @@ export default class VendingMachineModel {
   }
 
   setUserCharge(charge) {
-    this.userCharge = charge;
+    this.addUserCharge(charge);
 
     localStorage.setItem('userCharge', JSON.stringify(this.userCharge));
   }
 
+  addUserCharge(charge) {
+    this.userCharge += Number(charge);
+  }
+
   loadUserCharge() {
-    return JSON.parse(localStorage.getItem('userCharge'));
+    const userCharge = localStorage.getItem('userCharge');
+
+    if (userCharge === 'undefined') {
+      return false;
+    }
+    console.log(JSON.parse(userCharge));
+
+    return JSON.parse(userCharge);
   }
 
   getTotalMoney() {
