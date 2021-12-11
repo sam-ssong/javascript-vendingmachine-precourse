@@ -121,7 +121,7 @@ export default class VendingMachineController {
     this.vendingMachineView.renderProductPurchaseMenu(
       this.vendingMachineModel.products,
       this.vendingMachineModel.getCoinsAmountArray(),
-      this.vendingMachineModel.userMoney
+      this.vendingMachineModel.userCharge
     );
 
     this.vendingMachineView.selectProductPurchaseMenuDOM();
@@ -141,7 +141,9 @@ export default class VendingMachineController {
     const chargeInput = this.vendingMachineView.$chargeInput.value;
 
     if (isValidChargeInput(chargeInput)) {
-      return console.log('yes');
+      this.vendingMachineModel.setUserCharge(chargeInput);
+
+      return this.vendingMachineView.renderUserCharge(this.vendingMachineModel.userCharge);
     }
 
     return showError();

@@ -94,5 +94,10 @@ export default class VendingMachineView {
   selectProductPurchaseMenuDOM() {
     this.$chargeButton = $('#charge-button');
     this.$chargeInput = $('#charge-input');
+    this.$chargeAmount = $('#charge-amount');
+  }
+
+  renderUserCharge(userCharge) {
+    this.$chargeAmount.innerHTML = `${userCharge}원`;
   }
 }
