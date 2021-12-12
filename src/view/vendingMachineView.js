@@ -1,11 +1,12 @@
 import NUMBER from '../constants/number.js';
-import { $ } from './DOMhelper.js';
+import { $, $$ } from './DOMhelper.js';
 import {
   addItemTemplate,
   headerTemplate,
   productManageTemplate,
   vendingMachineManageTemplate,
   productPurchaseMenuTemplate,
+  productPurchaseMenuItemTemplate,
 } from './template.js';
 
 export default class VendingMachineView {
@@ -91,10 +92,20 @@ export default class VendingMachineView {
     );
   }
 
+  renderProductPurchaseMenuItems(products) {
+    const itemsTemplate = products
+      .map((product) => productPurchaseMenuItemTemplate(product))
+      .join('');
+
+    this.$productManageTable.insertAdjacentHTML('afterend', itemsTemplate);
+  }
+
   selectProductPurchaseMenuDOM() {
     this.$chargeButton = $('#charge-button');
     this.$chargeInput = $('#charge-input');
     this.$chargeAmount = $('#charge-amount');
+    this.$productPurchaseItem = $$('.purchase-button');
+    this.$productManageTable = $('.product-manage-table');
   }
 
   renderUserCharge(userCharge) {

@@ -31,6 +31,7 @@ export default class VendingMachineModel {
 
   loadCoins() {
     const coinsString = JSON.parse(localStorage.getItem('coins'));
+
     return coinsString ? coinsString.map(({ unit, amount }) => new Coin(unit, amount)) : false;
   }
 
@@ -50,7 +51,6 @@ export default class VendingMachineModel {
     if (userCharge === 'undefined') {
       return false;
     }
-    console.log(JSON.parse(userCharge));
 
     return JSON.parse(userCharge);
   }
@@ -64,7 +64,6 @@ export default class VendingMachineModel {
 
   getCoinsAmountArray() {
     const coinsAmountArray = defaultCoinsAmountArrray();
-
     this.coins.forEach(({ unit, amount }) => {
       if (unit === NUMBER.COIN_UNIT.FIVE_HUNDRED) {
         coinsAmountArray[0] = amount;
@@ -79,28 +78,15 @@ export default class VendingMachineModel {
         coinsAmountArray[3] = amount;
       }
     });
-
     return coinsAmountArray;
-  }
-
-  get500Coin() {
-    return this.coins.find((coin) => coin.unit === NUMBER.COIN_UNIT.FIVE_HUNDRED);
-  }
-
-  get100Coin() {
-    return this.coins.find((coin) => coin.unit === NUMBER.COIN_UNIT.ONE_HUNDRED);
-  }
-
-  get50Coin() {
-    return this.coins.find((coin) => coin.unit === NUMBER.COIN_UNIT.FIFTY);
-  }
-
-  get10Coin() {
-    return this.coins.find((coin) => coin.unit === NUMBER.COIN_UNIT.TEN);
   }
 
   findCoin(coinUnit) {
     return this.coins.find((coin) => coin.unit === coinUnit);
+  }
+
+  findProduct(name) {
+    return this.products.find((product) => product.name === name);
   }
 
   addAccumulateAmounts() {

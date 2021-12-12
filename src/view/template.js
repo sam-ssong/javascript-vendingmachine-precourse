@@ -92,16 +92,6 @@ export const productPurchaseMenuTemplate = (products, coins, userCharge) => {
         <th>수량</th>
         <th>구매</th>
       </tr>
-      ${products.map(({ name, price, quantity }) => {
-        return `
-          <tr class="product-purchase-item">
-            <th class="product-purchase-name" dataset="data-product-name">${name}</th>
-            <th class="product-purchase-price" dataset="data-product-price">${price}</th>
-            <th class="product-purchase-quantity" dataset="data-product-quantity">${quantity}</th>
-            <th class="purchase-button"><button>구매하기</button></th>
-          </tr>
-        `;
-      })}
     </table>
     <br/>
     <h2>잔돈</h2>
@@ -130,4 +120,15 @@ export const productPurchaseMenuTemplate = (products, coins, userCharge) => {
       </tr>
     </table>
   `;
+};
+
+export const productPurchaseMenuItemTemplate = ({ name, price, quantity }) => {
+  return `
+    <tr class="product-purchase-item">
+      <th class="product-purchase-name" data-product-name="${name}">${name}</th>
+      <th class="product-purchase-price" data-product-price="${price}">${price}</th>
+      <th class="product-purchase-quantity" data-product-quantity="${quantity}">${quantity}</th>
+      <th><button class="purchase-button">구매하기</button></th>
+    </tr>
+      `;
 };

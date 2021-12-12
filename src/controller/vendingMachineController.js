@@ -127,6 +127,8 @@ export default class VendingMachineController {
 
     this.vendingMachineView.selectProductPurchaseMenuDOM();
 
+    this.vendingMachineView.renderProductPurchaseMenuItems(this.vendingMachineModel.products);
+
     this.addProductPurchaseMenuEvents();
   }
 
@@ -135,10 +137,14 @@ export default class VendingMachineController {
       'click',
       this.handleChargeInput.bind(this)
     );
+    this.vendingMachineView.$productPurchaseItem.forEach((element) => {
+      element.addEventListener('click', this.handlePurchase.bind(this));
+    });
   }
 
   handleChargeInput(e) {
     e.preventDefault();
+
     const chargeInput = this.vendingMachineView.$chargeInput.value;
 
     if (isValidChargeInput(chargeInput)) {
@@ -148,5 +154,9 @@ export default class VendingMachineController {
     }
 
     return showError();
+  }
+
+  handlePurchase(e) {
+    e.preventDefault();
   }
 }
