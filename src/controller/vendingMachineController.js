@@ -85,6 +85,7 @@ export default class VendingMachineController {
 
   changeToProductManageTab() {
     this.vendingMachineView.renderProductManage(this.vendingMachineModel.products);
+    this.vendingMachineView.selectProductManageDOM();
     this.addProductManageEvents();
   }
 
