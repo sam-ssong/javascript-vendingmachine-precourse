@@ -75,7 +75,7 @@ export const vendingMachineManageTemplate = (coins, totalMoney) => {
   `;
 };
 
-export const productPurchaseMenuTemplate = (products, coins, userCharge) => {
+export const productPurchaseMenuTemplate = (coins, userCharge) => {
   return `
     <h2>금액 투입</h2>
     <form>
@@ -84,41 +84,38 @@ export const productPurchaseMenuTemplate = (products, coins, userCharge) => {
     </form>
     <div >투입한 금액 <span id="charge-amount">${userCharge}원</span><div>
     <br/>
-    <h2>구매할 수 있는 상품 현황</h2>
-    <table>
-      <tr class="product-manage-table">
-        <th>상품명</th>
-        <th>가격</th>
-        <th>수량</th>
-        <th>구매</th>
-      </tr>
-    </table>
+    <div>
+      <h2>구매할 수 있는 상품 현황</h2>
+      <table id="product-table"></table>
+    </div>
     <br/>
+    <div>
     <h2>잔돈</h2>
-    <br/>
-    <div><button id="coin-return-button">반환하기</button></div>
-    <table>
-      <tr>
-        <th>동전</th>
-        <th>개수</th>
-      </tr>
-      <tr>
-        <th>500원</th>
-        <th id="coin-500-quantity">${coins[0]}</th>
-      </tr>
-      <tr>
-        <th>100원</th>
-        <th id="coin-100-quantity">${coins[1]}</th>
-      </tr>
-      <tr>
-        <th>50원</th>
-        <th id="coin-50-quantity">${coins[2]}</th>
-      </tr>
-      <tr>
-        <th>10원</th>
-        <th id="coin-10-quantity">${coins[3]}</th>
-      </tr>
-    </table>
+      <br/>
+      <div><button id="coin-return-button">반환하기</button></div>
+      <table>
+        <tr>
+          <th>동전</th>
+          <th>개수</th>
+        </tr>
+        <tr>
+          <th>500원</th>
+          <th id="coin-500-quantity">${coins[0]}</th>
+        </tr>
+        <tr>
+          <th>100원</th>
+          <th id="coin-100-quantity">${coins[1]}</th>
+        </tr>
+        <tr>
+          <th>50원</th>
+          <th id="coin-50-quantity">${coins[2]}</th>
+        </tr>
+        <tr>
+          <th>10원</th>
+          <th id="coin-10-quantity">${coins[3]}</th>
+        </tr>
+      </table>
+    </div>
   `;
 };
 
@@ -126,9 +123,19 @@ export const productPurchaseMenuItemTemplate = ({ name, price, quantity }) => {
   return `
     <tr class="product-purchase-item">
       <th class="product-purchase-name" data-product-name="${name}">${name}</th>
-      <th class="product-purchase-price" data-product-price="${price}">${price}</th>
+      <th class= v"product-purchase-price" data-product-price="${price}">${price}</th>
       <th class="product-purchase-quantity" data-product-quantity="${quantity}">${quantity}</th>
-      <th><button class="purchase-button">구매하기</button></th>
+      <th ><button class="purchase-button">구매하기</button></th>
     </tr>
-      `;
+    `;
+};
+
+export const productPurchaseMenuItemHeaderTemplate = () => {
+  return `<tr class="product-manage-table">
+    <th>상품명</th>
+    <th>가격</th>
+    <th>수량</th>
+    <th>구매</th>
+  </tr>
+  `;
 };

@@ -7,6 +7,7 @@ import {
   vendingMachineManageTemplate,
   productPurchaseMenuTemplate,
   productPurchaseMenuItemTemplate,
+  productPurchaseMenuItemHeaderTemplate,
 } from './template.js';
 
 export default class VendingMachineView {
@@ -84,31 +85,42 @@ export default class VendingMachineView {
     }
   }
 
-  renderProductPurchaseMenu(products, vendingMachinecoinList, userMoney) {
-    this.$mainContent.innerHTML = productPurchaseMenuTemplate(
-      products,
-      vendingMachinecoinList,
-      userMoney
-    );
+  renderProductPurchaseMenu(vendingMachinecoinList, userMoney) {
+    this.$mainContent.innerHTML = productPurchaseMenuTemplate(vendingMachinecoinList, userMoney);
   }
 
   renderProductPurchaseMenuItems(products) {
+    this.$productTable = $('#product-table');
+
+    const tableHeaderTemplate = productPurchaseMenuItemHeaderTemplate();
     const itemsTemplate = products
       .map((product) => productPurchaseMenuItemTemplate(product))
       .join('');
 
-    this.$productManageTable.insertAdjacentHTML('afterend', itemsTemplate);
+    const result = tableHeaderTemplate + itemsTemplate;
+
+    this.$productTable.innerHTML = result;
   }
 
   selectProductPurchaseMenuDOM() {
     this.$chargeButton = $('#charge-button');
     this.$chargeInput = $('#charge-input');
     this.$chargeAmount = $('#charge-amount');
-    this.$productPurchaseItem = $$('.purchase-button');
-    this.$productManageTable = $('.product-manage-table');
+    this.$productPurchaseButton = $$('.purchase-button');
   }
 
   renderUserCharge(userCharge) {
     this.$chargeAmount.innerHTML = `${userCharge}원`;
+  }
+
+  renderItemQuantity(quantity) {
+    this.$productQuantityRow.innerHTML = quantity;
+  }
+
+  selectProductPurchaseItemDOM(e) {
+    this.$parent = e.target.closest('tr');
+    this.$productNameRow = $('[data-product-name]', this.$parent);
+    this.$productPriceRow = $('[data-product-price]', this.$parent);
+    this.$productQuantityRow = $('[data-product-quantity]', this.$parent);
   }
 }

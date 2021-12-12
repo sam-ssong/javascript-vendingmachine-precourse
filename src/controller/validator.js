@@ -60,3 +60,7 @@ export const isValidChargeInput = (value) => {
 
   return false;
 };
+
+export const isValidQuantity = (productQuantity) => {
+  return productQuantity >= 1;
+};

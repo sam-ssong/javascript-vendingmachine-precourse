@@ -1,6 +1,6 @@
 import VendingMachineView from '../view/vendingMachineView.js';
 import VendingMachineModel from '../model/vendingMachineModel.js';
-import { isValidProductInput, isValidChargeInput } from './validator.js';
+import { isValidProductInput, isValidChargeInput, isValidQuantity } from './validator.js';
 import { showError } from '../utils/error.js';
 import MESSAGE from '../constants/message.js';
 import NUMBER from '../constants/number.js';
@@ -25,15 +25,15 @@ export default class VendingMachineController {
 
   handleAddMenu(e) {
     e.preventDefault();
+    const name = this.vendingMachineView.$productNameInput.value;
+    const price = this.vendingMachineView.$productPriceInput.value;
+    const quantity = this.vendingMachineView.$productQuantityInput.value;
 
-    const productName = this.vendingMachineView.$productNameInput.value;
-    const productPrice = this.vendingMachineView.$productPriceInput.value;
-    const productQuantity = this.vendingMachineView.$productQuantityInput.value;
+    if (isValidProductInput(name, price, quantity)) {
+      this.vendingMachineModel.addProduct(name, price, quantity);
+      this.vendingMachineModel.setProducts(this.vendingMachineModel.products);
 
-    if (isValidProductInput(productName, productPrice, productQuantity)) {
-      this.vendingMachineModel.setProducts(productName, productPrice, productQuantity);
-
-      return this.vendingMachineView.renderItem(productName, productPrice, productQuantity);
+      return this.vendingMachineView.renderItem(name, price, quantity);
     }
 
     return showError(MESSAGE.ERROR.PRODUCT_PRICE);
@@ -120,14 +120,12 @@ export default class VendingMachineController {
 
   changeToProductPurchaseMenuTab() {
     this.vendingMachineView.renderProductPurchaseMenu(
-      this.vendingMachineModel.products,
       this.vendingMachineModel.getCoinsAmountArray(),
       this.vendingMachineModel.userCharge
     );
+    this.vendingMachineView.renderProductPurchaseMenuItems(this.vendingMachineModel.products);
 
     this.vendingMachineView.selectProductPurchaseMenuDOM();
-
-    this.vendingMachineView.renderProductPurchaseMenuItems(this.vendingMachineModel.products);
 
     this.addProductPurchaseMenuEvents();
   }
@@ -137,7 +135,7 @@ export default class VendingMachineController {
       'click',
       this.handleChargeInput.bind(this)
     );
-    this.vendingMachineView.$productPurchaseItem.forEach((element) => {
+    this.vendingMachineView.$productPurchaseButton.forEach((element) => {
       element.addEventListener('click', this.handlePurchase.bind(this));
     });
   }
@@ -158,5 +156,16 @@ export default class VendingMachineController {
 
   handlePurchase(e) {
     e.preventDefault();
+    this.vendingMachineView.selectProductPurchaseItemDOM(e);
+
+    const target = this.vendingMachineModel.findProduct(
+      this.vendingMachineView.$productNameRow.dataset.productName
+    );
+
+    if (isValidQuantity(target.quantity)) {
+      const changedQuantity = this.vendingMachineModel.decreaseQuantity(target);
+      this.vendingMachineModel.setProducts(this.vendingMachineModel.products);
+      this.vendingMachineView.renderItemQuantity(changedQuantity);
+    }
   }
 }

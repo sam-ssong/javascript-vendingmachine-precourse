@@ -9,14 +9,18 @@ export default class VendingMachineModel {
     this.userCharge = this.loadUserCharge() || NUMBER.ZERO;
   }
 
-  setProducts(name, price, quantity) {
+  setProducts(products) {
+    this.products = products;
+
+    localStorage.setItem('products', JSON.stringify(this.products));
+  }
+
+  addProduct(name, price, quantity) {
     this.products.push({
       name,
       price,
       quantity,
     });
-
-    localStorage.setItem('products', JSON.stringify(this.products));
   }
 
   loadProducts() {
@@ -85,15 +89,30 @@ export default class VendingMachineModel {
     return this.coins.find((coin) => coin.unit === coinUnit);
   }
 
-  findProduct(name) {
-    return this.products.find((product) => product.name === name);
-  }
-
   addAccumulateAmounts() {
     return this.coins.forEach((coin) => coin.addAccumulatedAmount());
   }
 
   resetAccumulatedAmounts() {
     return this.coins.forEach((coin) => coin.resetAccumulatedAmount());
+  }
+
+  findProduct(name) {
+    return this.products.find((product) => product.name === name);
+  }
+
+  decreaseQuantity(target) {
+    let newQuantity;
+
+    this.products
+      .filter((product) => product.name === target.name)
+      .map((product) => {
+        product.quantity -= 1;
+        newQuantity = product.quantity;
+
+        return product.quantity;
+      });
+
+    return newQuantity;
   }
 }
