@@ -52,15 +52,26 @@ export const isValidProductInput = (productName, productPrice, productQuantity) 
 };
 
 export const isValidChargeInput = (value) => {
-  if (isNotEmpty(value) && !isNaN(value) && isDividedByGivenNum(value, NUMBER.COIN_UNIT.TEN)) {
+  if (isNotEmpty(value) && !isNaN(value) && isDividedByGivenNum(value, NUMBER.COIN_UNIT.TEN))
     return true;
-  }
 
   setErrorMessage(MESSAGE.ERROR.NOT_ALLOWED_CHARGE_AMOUNT);
 
   return false;
 };
 
-export const isValidQuantity = (productQuantity) => {
-  return productQuantity >= 1;
+const isProductAvailable = (quantity) => {
+  return quantity >= 1;
 };
+
+export const isValidPurchase = (product, userCharge) => {
+  if (isProductAvailable(product.quantity) && isOverGivenPrice(userCharge, product.price)) {
+    return true;
+  }
+
+  setErrorMessage(MESSAGE.ERROR.NOT_VALID_PURCHASE);
+
+  return false;
+};
+
+// export const isValidReturn = (userCharge, )

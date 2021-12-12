@@ -39,9 +39,7 @@ export default class VendingMachineModel {
     return coinsString ? coinsString.map(({ unit, amount }) => new Coin(unit, amount)) : false;
   }
 
-  setUserCharge(charge) {
-    this.addUserCharge(charge);
-
+  setUserCharge() {
     localStorage.setItem('userCharge', JSON.stringify(this.userCharge));
   }
 
@@ -114,5 +112,26 @@ export default class VendingMachineModel {
       });
 
     return newQuantity;
+  }
+
+  decreaseUserCharge(price) {
+    this.userCharge -= price;
+  }
+
+  decreaseCoin(coin500Quantity, coin100Quantity, coin50Quantity, coin10Quantity) {
+    this.coins.forEach((coin) => {
+      if (coin.unit === NUMBER.COIN_UNIT.FIVE_HUNDRED) {
+        coin.amount -= coin500Quantity;
+      }
+      if (coin.unit === NUMBER.COIN_UNIT.ONE_HUNDRED) {
+        coin.amount -= coin100Quantity;
+      }
+      if (coin.unit === NUMBER.COIN_UNIT.FIFTY) {
+        coin.amount -= coin50Quantity;
+      }
+      if (coin.unit === NUMBER.COIN_UNIT.TEN) {
+        coin.amount -= coin10Quantity;
+      }
+    });
   }
 }

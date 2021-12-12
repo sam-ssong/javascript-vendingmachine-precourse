@@ -1,9 +1,10 @@
 import VendingMachineView from '../view/vendingMachineView.js';
 import VendingMachineModel from '../model/vendingMachineModel.js';
-import { isValidProductInput, isValidChargeInput, isValidQuantity } from './validator.js';
+import { isValidProductInput, isValidChargeInput, isValidPurchase } from './validator.js';
 import { showError } from '../utils/error.js';
 import MESSAGE from '../constants/message.js';
 import NUMBER from '../constants/number.js';
+import { getReturnedCoin } from './exchange.js';
 
 export default class VendingMachineController {
   constructor() {
@@ -119,10 +120,7 @@ export default class VendingMachineController {
   }
 
   changeToProductPurchaseMenuTab() {
-    this.vendingMachineView.renderProductPurchaseMenu(
-      this.vendingMachineModel.getCoinsAmountArray(),
-      this.vendingMachineModel.userCharge
-    );
+    this.vendingMachineView.renderProductPurchaseMenu(this.vendingMachineModel.userCharge);
     this.vendingMachineView.renderProductPurchaseMenuItems(this.vendingMachineModel.products);
 
     this.vendingMachineView.selectProductPurchaseMenuDOM();
@@ -138,6 +136,10 @@ export default class VendingMachineController {
     this.vendingMachineView.$productPurchaseButton.forEach((element) => {
       element.addEventListener('click', this.handlePurchase.bind(this));
     });
+    this.vendingMachineView.$coinReturnButton.addEventListener(
+      'click',
+      this.handleReturn.bind(this)
+    );
   }
 
   handleChargeInput(e) {
@@ -146,7 +148,8 @@ export default class VendingMachineController {
     const chargeInput = this.vendingMachineView.$chargeInput.value;
 
     if (isValidChargeInput(chargeInput)) {
-      this.vendingMachineModel.setUserCharge(chargeInput);
+      this.vendingMachineModel.addUserCharge(chargeInput);
+      this.vendingMachineModel.setUserCharge();
 
       return this.vendingMachineView.renderUserCharge(this.vendingMachineModel.userCharge);
     }
@@ -162,10 +165,33 @@ export default class VendingMachineController {
       this.vendingMachineView.$productNameRow.dataset.productName
     );
 
-    if (isValidQuantity(target.quantity)) {
+    if (isValidPurchase(target, this.vendingMachineModel.userCharge)) {
       const changedQuantity = this.vendingMachineModel.decreaseQuantity(target);
       this.vendingMachineModel.setProducts(this.vendingMachineModel.products);
       this.vendingMachineView.renderItemQuantity(changedQuantity);
+      this.vendingMachineModel.decreaseUserCharge(target.price);
+      this.vendingMachineModel.setUserCharge();
+      return this.vendingMachineView.renderUserCharge(this.vendingMachineModel.userCharge);
     }
+
+    return showError();
+  }
+
+  handleReturn(e) {
+    e.preventDefault();
+
+    const userChargeTillhundreds = this.vendingMachineModel.userCharge % 1000;
+
+    const [coin500Quantity, coin100Quantity, coin50Quantity, coin10Quantity] = getReturnedCoin(
+      userChargeTillhundreds,
+      this.vendingMachineModel.coins
+    );
+
+    this.vendingMachineView.renderCoinReturn(
+      coin500Quantity,
+      coin100Quantity,
+      coin50Quantity,
+      coin10Quantity
+    );
   }
 }

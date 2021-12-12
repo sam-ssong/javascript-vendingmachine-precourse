@@ -85,8 +85,8 @@ export default class VendingMachineView {
     }
   }
 
-  renderProductPurchaseMenu(vendingMachinecoinList, userMoney) {
-    this.$mainContent.innerHTML = productPurchaseMenuTemplate(vendingMachinecoinList, userMoney);
+  renderProductPurchaseMenu(userMoney) {
+    this.$mainContent.innerHTML = productPurchaseMenuTemplate(userMoney);
   }
 
   renderProductPurchaseMenuItems(products) {
@@ -107,6 +107,11 @@ export default class VendingMachineView {
     this.$chargeInput = $('#charge-input');
     this.$chargeAmount = $('#charge-amount');
     this.$productPurchaseButton = $$('.purchase-button');
+    this.$coinReturnButton = $('#coin-return-button');
+    this.$coin500Quantity = $('#coin-500-quantity');
+    this.$coin100Quantity = $('#coin-100-quantity');
+    this.$coin50Quantity = $('#coin-50-quantity');
+    this.$coin10Quantity = $('#coin-10-quantity');
   }
 
   renderUserCharge(userCharge) {
@@ -122,5 +127,12 @@ export default class VendingMachineView {
     this.$productNameRow = $('[data-product-name]', this.$parent);
     this.$productPriceRow = $('[data-product-price]', this.$parent);
     this.$productQuantityRow = $('[data-product-quantity]', this.$parent);
+  }
+
+  renderCoinReturn(coin500Quantity, coin100Quantity, coin50Quantity, coin10Quantity) {
+    this.$coin500Quantity.innerHTML = `${coin500Quantity}개`;
+    this.$coin100Quantity.innerHTML = `${coin100Quantity}개`;
+    this.$coin50Quantity.innerHTML = `${coin50Quantity}개`;
+    this.$coin10Quantity.innerHTML = `${coin10Quantity}개`;
   }
 }

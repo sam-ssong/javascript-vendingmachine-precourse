@@ -1,3 +1,5 @@
+import NUMBER from '../constants/number.js';
+
 export const headerTemplate = () => {
   return `
     <h1>🥤자판기🥤</h1>
@@ -57,25 +59,25 @@ export const vendingMachineManageTemplate = (coins, totalMoney) => {
       </tr>
       <tr>
         <th>500원</th>
-        <th id="vending-machine-coin-500-quantity">${coins[0]}</th>
+        <th id="vending-machine-coin-500-quantity">${coins[0]}개</th>
       </tr>
       <tr>
         <th>100원</th>
-        <th id="vending-machine-coin-100-quantity">${coins[1]}</th>
+        <th id="vending-machine-coin-100-quantity">${coins[1]}개</th>
       </tr>
       <tr>
         <th>50원</th>
-        <th id="vending-machine-coin-50-quantity">${coins[2]}</th>
+        <th id="vending-machine-coin-50-quantity">${coins[2]}개</th>
       </tr>
       <tr>
         <th>10원</th>
-        <th id="vending-machine-coin-10-quantity">${coins[3]}</th>
+        <th id="vending-machine-coin-10-quantity">${coins[3]}개</th>
       </tr>
     </table>
   `;
 };
 
-export const productPurchaseMenuTemplate = (coins, userCharge) => {
+export const productPurchaseMenuTemplate = (userCharge) => {
   return `
     <h2>금액 투입</h2>
     <form>
@@ -100,19 +102,19 @@ export const productPurchaseMenuTemplate = (coins, userCharge) => {
         </tr>
         <tr>
           <th>500원</th>
-          <th id="coin-500-quantity">${coins[0]}</th>
+          <th id="coin-500-quantity">${NUMBER.ZERO}개</th>
         </tr>
         <tr>
           <th>100원</th>
-          <th id="coin-100-quantity">${coins[1]}</th>
+          <th id="coin-100-quantity">${NUMBER.ZERO}개</th>
         </tr>
         <tr>
           <th>50원</th>
-          <th id="coin-50-quantity">${coins[2]}</th>
+          <th id="coin-50-quantity">${NUMBER.ZERO}개</th>
         </tr>
         <tr>
           <th>10원</th>
-          <th id="coin-10-quantity">${coins[3]}</th>
+          <th id="coin-10-quantity">${NUMBER.ZERO}개</th>
         </tr>
       </table>
     </div>
